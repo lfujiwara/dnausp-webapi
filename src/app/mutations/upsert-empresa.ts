@@ -2,6 +2,8 @@ import { Result } from 'typescript-monads';
 import { Empresa } from '../../domain/empresa';
 import { CNPJ } from '../../domain/cnpj';
 import { CNAE } from '../../domain/cnae';
+import { EmpresaDbPort } from '../database/empresa.db-port';
+import { Injectable } from '@nestjs/common';
 
 export interface UpsertEmpresaMutationInput {
   idEstrangeira?: number;
@@ -15,7 +17,10 @@ export interface UpsertEmpresaMutationInput {
   situacao?: string;
 }
 
+@Injectable()
 export class UpsertEmpresaMutation {
+  constructor(private readonly port: EmpresaDbPort) {}
+
   async mutate(
     input: UpsertEmpresaMutationInput,
   ): Promise<Result<Empresa, string[]>> {
@@ -61,6 +66,11 @@ export class UpsertEmpresaMutation {
     if (empresaResult.isFail()) errors.push(...empresaResult.unwrapFail());
     if (errors.length > 0) return Result.fail(errors);
 
-    return Result.ok(empresaResult.unwrap());
+    const instance = empresaResult.unwrap();
+    const result = await this.port.upsertEmpresa(instance);
+
+    if (result.isFail()) return Result.fail([result.unwrapFail()]);
+
+    return Result.ok(result.unwrap());
   }
 }

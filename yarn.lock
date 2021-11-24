@@ -1776,6 +1776,11 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
+cnpj@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/cnpj/-/cnpj-4.0.1.tgz#9a3b59980c7748ee6a52478c79af0d79cce4db68"
+  integrity sha512-DlUYT0loX2LoSy7wFwEOu40SMMPN/3ZaloUNv8O+PRSksSoYLk1fQx1x5PzSo2WHRDn5ySV7JXYbg3TpDsQ2rA==
+
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -4569,7 +4574,7 @@ rxjs@6.6.7, rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.2.0:
+rxjs@^7, rxjs@^7.2.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.4.0.tgz#a12a44d7eebf016f5ff2441b87f28c9a51cebc68"
   integrity sha512-7SQDi7xeTMCJpqViXh8gL/lebcwlp3d831F05+9B44A4B0WfsEwUQHR64gsH1kvJ+Ep/J9K2+n1hVl1CsGN23w==
@@ -5205,6 +5210,13 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript-monads@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/typescript-monads/-/typescript-monads-7.2.0.tgz#377e6c494737cf5834c4c4b4c4439bb4e90c34eb"
+  integrity sha512-c/t80zo/ThAxn92pgSC2GPuTM6gr0ijpD+yAF6mv2EH7KvYoLL7lPvFHbxEPsv8utXU2i2+a/lyEtT/IL/JQ8g==
+  optionalDependencies:
+    rxjs "^7"
 
 typescript@4.3.5:
   version "4.3.5"

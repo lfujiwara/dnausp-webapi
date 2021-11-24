@@ -25,8 +25,8 @@ export class EmpresaDbQueryPortPrisma {
       },
       where: {
         anoFundacao: {
-          gt: input.anoMin,
-          lt: input.anoMax,
+          gte: input.anoMin,
+          lte: input.anoMax,
         },
         atividadePrincipal: {
           not: null,

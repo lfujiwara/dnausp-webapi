@@ -1,10 +1,13 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put, Query } from '@nestjs/common';
 import {
   UpsertEmpresaMutation,
   UpsertEmpresaMutationInput,
 } from '../app/mutations/upsert-empresa';
 import { Result } from 'typescript-monads';
-import { EmpresaDbQueryPortPrisma } from '../ports/database/empresa.db-query-port.prisma';
+import {
+  CnaeGroupsCountInput,
+  EmpresaDbQueryPortPrisma,
+} from '../ports/database/empresa.db-query-port.prisma';
 
 const groupResults = <T, E>(
   results: Result<T, E>[],
@@ -40,7 +43,17 @@ export class EmpresasController {
   }
 
   @Get('cnae/stats')
-  async getCnaeStats() {
-    return this.dbQueryPort.execute();
+  async getCnaeStats(
+    @Query('anoMin') _anoMin: string,
+    @Query('anoMax') _anoMax: string,
+  ) {
+    const anoMin: number | undefined = parseInt(_anoMin, 10);
+    const anoMax: number | undefined = parseInt(_anoMax, 10);
+
+    const filter: CnaeGroupsCountInput = {};
+    if (!isNaN(anoMin)) filter.anoMin = anoMin;
+    if (!isNaN(anoMax)) filter.anoMax = anoMax;
+
+    return this.dbQueryPort.execute(filter);
   }
 }

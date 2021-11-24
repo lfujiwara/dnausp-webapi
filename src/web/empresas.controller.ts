@@ -1,9 +1,10 @@
-import { Body, Controller, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put } from '@nestjs/common';
 import {
   UpsertEmpresaMutation,
   UpsertEmpresaMutationInput,
 } from '../app/mutations/upsert-empresa';
 import { Result } from 'typescript-monads';
+import { EmpresaDbQueryPortPrisma } from '../ports/database/empresa.db-query-port.prisma';
 
 const groupResults = <T, E>(
   results: Result<T, E>[],
@@ -22,7 +23,10 @@ const groupResults = <T, E>(
 
 @Controller('empresas')
 export class EmpresasController {
-  constructor(private readonly upsertEmpresa: UpsertEmpresaMutation) {}
+  constructor(
+    private readonly upsertEmpresa: UpsertEmpresaMutation,
+    private readonly dbQueryPort: EmpresaDbQueryPortPrisma,
+  ) {}
 
   @Put()
   upsert(
@@ -33,5 +37,10 @@ export class EmpresasController {
         ? input.map(this.upsertEmpresa.mutate.bind(this.upsertEmpresa))
         : [this.upsertEmpresa.mutate(input)],
     ).then(groupResults);
+  }
+
+  @Get('cnae/stats')
+  async getCnaeStats() {
+    return this.dbQueryPort.execute();
   }
 }

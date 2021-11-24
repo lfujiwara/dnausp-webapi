@@ -4,9 +4,11 @@ import { Result } from 'typescript-monads';
 import { CNPJ } from '../../domain/cnpj';
 import { CNAE } from '../../domain/cnae';
 import { Empresa as PrismaEmpresa, Prisma, PrismaClient } from '@prisma/client';
+import { Injectable, Optional } from '@nestjs/common';
 
+@Injectable()
 export class EmpresaDbPortPrisma extends EmpresaDbPort {
-  constructor(readonly client: PrismaClient = new PrismaClient()) {
+  constructor(@Optional() readonly client: PrismaClient = new PrismaClient()) {
     super();
   }
 

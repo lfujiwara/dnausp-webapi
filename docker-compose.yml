@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  api:
+    image: dnausp-webapi
+    build:
+      context: .
+      target: development
+      args:
+        USER_ID: 1000
+        GROUP_ID: 1000
+    volumes:
+      - ".:/usr/src/api"
+      - "/usr/src/api/node_modules"
+    ports:
+      - "3333:3333"
+    env_file:
+      - ".env"
+    restart: always

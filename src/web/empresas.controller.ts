@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Put, Query, UseGuards } from '@nestjs/common';
 import {
   UpsertEmpresaMutation,
   UpsertEmpresaMutationInput,
@@ -8,6 +8,7 @@ import {
   CnaeGroupsCountInput,
   EmpresaDbQueryPortPrisma,
 } from '../ports/database/empresa.db-query-port.prisma';
+import { JwtGuard } from '../auth/guards/jwt.guard';
 
 const groupResults = <T, E>(
   results: Result<T, E>[],
@@ -32,6 +33,7 @@ export class EmpresasController {
   ) {}
 
   @Put()
+  @UseGuards(JwtGuard)
   upsert(
     @Body() input: UpsertEmpresaMutationInput | UpsertEmpresaMutationInput[],
   ) {
@@ -43,6 +45,7 @@ export class EmpresasController {
   }
 
   @Get('cnae/stats')
+  @UseGuards(JwtGuard)
   async getCnaeStats(
     @Query('anoMin') _anoMin: string,
     @Query('anoMax') _anoMax: string,

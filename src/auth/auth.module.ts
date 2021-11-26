@@ -8,17 +8,21 @@ import { JwtConfigProvider } from './config/jwt-config.provider';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { WhitelistService } from './services/whitelist.service';
 import { WhitelistAuthorizationService } from './services/whitelist-authorization.service';
+import { JwtGuard } from './guards/jwt.guard';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [ConfigModule.forRoot(), JwtModule.register({})],
   controllers: [GoogleAuthController],
   providers: [
+    WhitelistService,
+    WhitelistAuthorizationService,
     GoogleOAuthConfigProvider,
     GoogleOAuthStrategy,
     GoogleOAuthGuard,
     JwtConfigProvider,
-    WhitelistService,
-    WhitelistAuthorizationService,
+    JwtStrategy,
+    JwtGuard,
     {
       provide: JwtService,
       useFactory: (config: JwtConfigProvider) =>
@@ -26,5 +30,6 @@ import { WhitelistAuthorizationService } from './services/whitelist-authorizatio
       inject: [JwtConfigProvider],
     },
   ],
+  exports: [JwtGuard],
 })
 export class AuthModule {}

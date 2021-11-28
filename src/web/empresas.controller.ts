@@ -4,11 +4,11 @@ import {
   UpsertEmpresaMutationInput,
 } from '../app/mutations/upsert-empresa';
 import { Result } from 'typescript-monads';
-import {
-  CnaeGroupsCountInput,
-  EmpresaDbQueryPortPrisma,
-} from '../ports/database/empresa.db-query-port.prisma';
 import { JwtGuard } from '../auth/guards/jwt.guard';
+import {
+  CnaeGroupsCountQuery,
+  CnaeGroupsCountQueryInput,
+} from '../app/queries/cnae-groups-count.query';
 
 const groupResults = <T, E>(
   results: Result<T, E>[],
@@ -29,7 +29,7 @@ const groupResults = <T, E>(
 export class EmpresasController {
   constructor(
     private readonly upsertEmpresa: UpsertEmpresaMutation,
-    private readonly dbQueryPort: EmpresaDbQueryPortPrisma,
+    private readonly cnaeGroupsCountQuery: CnaeGroupsCountQuery,
   ) {}
 
   @Put()
@@ -53,10 +53,10 @@ export class EmpresasController {
     const anoMin: number | undefined = parseInt(_anoMin, 10);
     const anoMax: number | undefined = parseInt(_anoMax, 10);
 
-    const filter: CnaeGroupsCountInput = {};
+    const filter: CnaeGroupsCountQueryInput = {};
     if (!isNaN(anoMin)) filter.anoMin = anoMin;
     if (!isNaN(anoMax)) filter.anoMax = anoMax;
 
-    return this.dbQueryPort.execute(filter);
+    return this.cnaeGroupsCountQuery.execute(filter);
   }
 }

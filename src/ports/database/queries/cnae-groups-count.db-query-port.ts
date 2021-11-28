@@ -1,23 +1,20 @@
 import { PrismaClient } from '@prisma/client';
 import { Injectable, Optional } from '@nestjs/common';
-
-export type CnaeGroupsCountInput = {
-  anoMin?: number;
-  anoMax?: number;
-};
-
-export type CnaeGroupsCountOutput = {
-  cnae: string;
-  count: number;
-}[];
+import {
+  CnaeGroupsCountQuery,
+  CnaeGroupsCountQueryInput,
+  CnaeGroupsCountQueryOutput,
+} from '../../../app/queries/cnae-groups-count.query';
 
 @Injectable()
-export class EmpresaDbQueryPortPrisma {
-  constructor(@Optional() readonly client: PrismaClient = new PrismaClient()) {}
+export class CnaeGroupsCountDbQueryPort extends CnaeGroupsCountQuery {
+  constructor(@Optional() readonly client: PrismaClient = new PrismaClient()) {
+    super();
+  }
 
   async execute(
-    input: CnaeGroupsCountInput = {},
-  ): Promise<CnaeGroupsCountOutput> {
+    input: CnaeGroupsCountQueryInput = {},
+  ): Promise<CnaeGroupsCountQueryOutput> {
     const queryRes = await this.client.empresa.groupBy({
       by: ['atividadePrincipal'],
       _count: {

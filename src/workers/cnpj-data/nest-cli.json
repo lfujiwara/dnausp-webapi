@@ -1,0 +1,5 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src/workers/cnpj-data",
+  "entryFile": "workers/cnpj-data/main.js"
+}

@@ -15,6 +15,10 @@ export interface UpsertEmpresaMutationInput {
   atividadePrincipal?: string;
   atividadeSecundaria?: string[];
   situacao?: string;
+  faturamentos?: {
+    anoFiscal: number;
+    valor: number;
+  }[];
 }
 
 @Injectable()
@@ -48,6 +52,12 @@ export class UpsertEmpresaMutation {
     if (anoDeFundacaoResult.isFail())
       errors.push(anoDeFundacaoResult.unwrapFail());
 
+    const faturamentosResult = Empresa.validateFaturamentos(
+      input.faturamentos || [],
+    );
+    if (faturamentosResult.isFail())
+      errors.push(...faturamentosResult.unwrapFail());
+
     if (errors.length > 0) return Result.fail(errors);
 
     const empresaResult = Empresa.create({
@@ -62,6 +72,7 @@ export class UpsertEmpresaMutation {
       situacao: input.situacao,
       estrangeira: !!input.estrangeira,
       idEstrangeira: input.idEstrangeira,
+      faturamentos: faturamentosResult.unwrap(),
     });
     if (empresaResult.isFail()) errors.push(...empresaResult.unwrapFail());
     if (errors.length > 0) return Result.fail(errors);

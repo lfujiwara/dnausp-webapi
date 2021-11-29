@@ -5,12 +5,20 @@ export class CNAE {
   private cnae: string;
 
   constructor(cnae) {
-    this.set(cnae);
+    this.set(CNAE.unformatCNAE(cnae));
   }
 
   static create(cnae): Result<CNAE, string> {
     if (!CNAE.validate(cnae)) return Result.fail(`CNAE ${cnae} inválido`);
     return Result.ok(new CNAE(cnae));
+  }
+
+  static unformatCNAE(cnae): string {
+    return cnae.replace(/\D/g, '');
+  }
+
+  static formatCNAE(cnae: string) {
+    return cnae.replace(/(\d{2})(\d{2})(\d{2})(\d{2})/, '$1.$2.$3/$4');
   }
 
   static getSecao(cnae: string) {
@@ -30,7 +38,7 @@ export class CNAE {
   }
 
   static validate(cnae: string): boolean {
-    return !!data.subclasses[cnae];
+    return !!data.subclasses[CNAE.unformatCNAE(cnae)];
   }
 
   public get() {

@@ -4,7 +4,7 @@ export class CNPJ {
   private cnpj: string;
 
   constructor(cnpj: string) {
-    this.set(cnpj);
+    this.set(CNPJ.unformatCNPJ(cnpj));
   }
 
   static create(cnpj: string): Result<CNPJ, string> {
@@ -29,7 +29,7 @@ export class CNPJ {
 
   public set(cnpj: string): void {
     if (!_validateCNPJ(cnpj)) throw new Error('CNPJ inválido');
-    this.cnpj = cnpj;
+    this.cnpj = CNPJ.unformatCNPJ(cnpj);
   }
 }
 

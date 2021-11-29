@@ -21,4 +21,14 @@ model Empresa {
   atividadePrincipal    String?
   atividadesSecundarias String[]
   situacao              String?
+  faturamentos          Faturamento[]
+}
+
+model Faturamento {
+  empresaId String   @db.Uuid
+  empresa   Empresa  @relation(fields: [empresaId], references: [id])
+  anoFiscal Int
+  valor     BigInt
+
+  @@id([empresaId, anoFiscal])
 }

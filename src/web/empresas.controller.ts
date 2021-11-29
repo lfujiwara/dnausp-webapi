@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Put, Query, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   UpsertEmpresaMutation,
   UpsertEmpresaMutationInput,
@@ -9,6 +21,9 @@ import {
   CnaeGroupsCountQuery,
   CnaeGroupsCountQueryInput,
 } from '../app/queries/cnae-groups-count.query';
+import { AddFaturamentoMutation } from '../app/mutations/add-faturamento';
+import { EmpresaJsonSerializer } from '../ports/serializers/json/empresa.json-serializer';
+import { RemoveFaturamentoMutation } from '../app/mutations/remove-faturamento';
 
 const groupResults = <T, E>(
   results: Result<T, E>[],
@@ -29,6 +44,8 @@ const groupResults = <T, E>(
 export class EmpresasController {
   constructor(
     private readonly upsertEmpresa: UpsertEmpresaMutation,
+    private readonly addFaturamentoMutation: AddFaturamentoMutation,
+    private readonly removeFaturamentoMutation: RemoveFaturamentoMutation,
     private readonly cnaeGroupsCountQuery: CnaeGroupsCountQuery,
   ) {}
 
@@ -42,6 +59,38 @@ export class EmpresasController {
         ? input.map(this.upsertEmpresa.mutate.bind(this.upsertEmpresa))
         : [this.upsertEmpresa.mutate(input)],
     ).then(groupResults);
+  }
+
+  @Post(':empresaId/faturamentos/:anoFiscal')
+  @UseGuards(JwtGuard)
+  async addFaturamento(
+    @Param('empresaId') empresaId: string,
+    @Param('anoFiscal', ParseIntPipe) anoFiscal: number,
+    @Body('valor', ParseIntPipe) valor: number,
+  ) {
+    const result = await this.addFaturamentoMutation.execute({
+      empresaId,
+      anoFiscal,
+      valor,
+    });
+    if (result.isOk()) return EmpresaJsonSerializer.serialize(result.unwrap());
+
+    throw new BadRequestException(result.unwrapFail());
+  }
+
+  @Delete(':empresaId/faturamentos/:anoFiscal')
+  @UseGuards(JwtGuard)
+  async removeFaturamento(
+    @Param('empresaId') empresaId: string,
+    @Param('anoFiscal', ParseIntPipe) anoFiscal: number,
+  ) {
+    const result = await this.removeFaturamentoMutation.execute({
+      empresaId,
+      anoFiscal,
+    });
+    if (result.isOk()) return EmpresaJsonSerializer.serialize(result.unwrap());
+
+    throw new BadRequestException(result.unwrapFail());
   }
 
   @Get('cnae/stats')

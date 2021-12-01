@@ -24,9 +24,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!isWhitelisted) return null;
 
     return {
-      email: payload.email,
-      name: payload.name,
-      givenName: payload.givenName,
+      email: payload.user.email,
+      name: payload.user.name,
+      givenName: payload.user.givenName,
     } as IAuthUser;
   }
 }

@@ -1,4 +1,4 @@
-import { Faturamento } from '../../../domain/faturamento';
+import { Faturamento } from '@dnausp/core';
 
 export class FaturamentoJsonSerializer {
   static serialize(faturamento: Faturamento) {

@@ -1,4 +1,4 @@
-import { Empresa } from '../../../domain/empresa';
+import { Empresa } from '@dnausp/core';
 import { CNPJJsonSerializer } from './cnpj-json.serializer';
 import { CNAEJsonSerializer } from './cnae.json-serializer';
 import { FaturamentoJsonSerializer } from './faturamento.json-serializer';

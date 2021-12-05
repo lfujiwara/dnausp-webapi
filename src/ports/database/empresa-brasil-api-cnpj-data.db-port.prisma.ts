@@ -1,7 +1,8 @@
 import { Injectable, Optional } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
-import { CNPJ } from '../../domain/cnpj';
+
 import { Result } from 'typescript-monads';
+import { CNPJ } from '@dnausp/core';
 
 @Injectable()
 export class EmpresaBrasilApiCnpjDataDbPortPrisma {

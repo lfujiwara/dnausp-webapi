@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { EmpresaDbPort } from '../app/database/empresa.db-port';
+import { EmpresaDbPort } from '@dnausp/core';
 import { EmpresaDbPortPrisma } from './database/empresa.db-port.prisma';
 import { QueriesModule } from './database/queries/queries.module';
 import { HttpModule } from '@nestjs/axios';

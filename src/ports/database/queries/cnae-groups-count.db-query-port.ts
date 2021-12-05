@@ -4,7 +4,7 @@ import {
   CnaeGroupsCountQuery,
   CnaeGroupsCountQueryInput,
   CnaeGroupsCountQueryOutput,
-} from '../../../app/queries/cnae-groups-count.query';
+} from '@dnausp/core';
 
 @Injectable()
 export class CnaeGroupsCountDbQueryPort extends CnaeGroupsCountQuery {

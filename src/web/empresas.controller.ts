@@ -12,18 +12,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
-  UpsertEmpresaMutation,
-  UpsertEmpresaMutationInput,
-} from '../app/mutations/upsert-empresa';
-import { Result } from 'typescript-monads';
-import { JwtGuard } from '../auth/guards/jwt.guard';
-import {
+  AddFaturamentoMutation,
   CnaeGroupsCountQuery,
   CnaeGroupsCountQueryInput,
-} from '../app/queries/cnae-groups-count.query';
-import { AddFaturamentoMutation } from '../app/mutations/add-faturamento';
+  RemoveFaturamentoMutation,
+  UpsertEmpresaMutation,
+  UpsertEmpresaMutationInput,
+} from '@dnausp/core';
+import { Result } from 'typescript-monads';
+import { JwtGuard } from '../auth/guards/jwt.guard';
 import { EmpresaJsonSerializer } from '../ports/serializers/json/empresa.json-serializer';
-import { RemoveFaturamentoMutation } from '../app/mutations/remove-faturamento';
 
 const groupResults = <T, E>(
   results: Result<T, E>[],

@@ -372,6 +372,13 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
+"@dnausp/core@^0.0.1-alpha.2":
+  version "0.0.1-alpha.2"
+  resolved "https://registry.yarnpkg.com/@dnausp/core/-/core-0.0.1-alpha.2.tgz#5b22aac2551833eed5c7ae70ccc1b1c6f5e83284"
+  integrity sha512-JlV5tLBGhDk/2sXzdDyUzhGUb9j/4nnZe0IlZyQPEOh6eBNuLlzHdE/nNbtLchPBXteOsqTFdAi4BBPpmDdn8Q==
+  dependencies:
+    typescript-monads "^7.2.0"
+
 "@eslint/eslintrc@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.0.4.tgz#dfe0ff7ba270848d10c5add0715e04964c034b31"

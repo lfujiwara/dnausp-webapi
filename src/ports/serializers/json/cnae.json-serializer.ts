@@ -1,4 +1,4 @@
-import { CNAE } from '../../../domain/cnae';
+import { CNAE } from '@dnausp/core';
 
 export class CNAEJsonSerializer {
   static serialize(cnae: CNAE) {

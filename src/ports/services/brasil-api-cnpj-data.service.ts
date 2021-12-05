@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CNPJ } from '../../domain/cnpj';
+import { CNPJ } from '@dnausp/core';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom, map } from 'rxjs';
 

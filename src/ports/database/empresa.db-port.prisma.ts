@@ -1,8 +1,3 @@
-import { EmpresaDbPort } from '../../app/database/empresa.db-port';
-import { Empresa } from '../../domain/empresa';
-import { Result } from 'typescript-monads';
-import { CNPJ } from '../../domain/cnpj';
-import { CNAE } from '../../domain/cnae';
 import {
   Empresa as PrismaEmpresa,
   Faturamento as PrismaFaturamento,
@@ -10,7 +5,8 @@ import {
   PrismaClient,
 } from '@prisma/client';
 import { Injectable, Optional } from '@nestjs/common';
-import { Faturamento } from '../../domain/faturamento';
+import { CNAE, CNPJ, Empresa, EmpresaDbPort, Faturamento } from '@dnausp/core';
+import { Result } from 'typescript-monads';
 
 @Injectable()
 export class EmpresaDbPortPrisma extends EmpresaDbPort {

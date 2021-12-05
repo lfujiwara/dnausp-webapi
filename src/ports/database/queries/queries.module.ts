@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CnaeGroupsCountQuery } from '../../../app/queries/cnae-groups-count.query';
+import { CnaeGroupsCountQuery } from '@dnausp/core';
 import { CnaeGroupsCountDbQueryPort } from './cnae-groups-count.db-query-port';
 
 @Module({

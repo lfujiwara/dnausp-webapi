@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { BrasilApiCnpjDataService } from '../../ports/services/brasil-api-cnpj-data.service';
 import { EmpresaBrasilApiCnpjDataDbPortPrisma } from '../../ports/database/empresa-brasil-api-cnpj-data.db-port.prisma';
-import { CNPJ } from '../../domain/cnpj';
+import { CNPJ } from '@dnausp/core';
 
 @Injectable()
 export class CnpjDataWorkerService {

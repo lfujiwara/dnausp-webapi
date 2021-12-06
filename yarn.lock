@@ -372,12 +372,13 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
-"@dnausp/core@^0.0.1-alpha.2":
-  version "0.0.1-alpha.2"
-  resolved "https://registry.yarnpkg.com/@dnausp/core/-/core-0.0.1-alpha.2.tgz#5b22aac2551833eed5c7ae70ccc1b1c6f5e83284"
-  integrity sha512-JlV5tLBGhDk/2sXzdDyUzhGUb9j/4nnZe0IlZyQPEOh6eBNuLlzHdE/nNbtLchPBXteOsqTFdAi4BBPpmDdn8Q==
+"@dnausp/core@^0.0.1-alpha.6":
+  version "0.0.1-alpha.6"
+  resolved "https://registry.yarnpkg.com/@dnausp/core/-/core-0.0.1-alpha.6.tgz#5729a45fdfdcf63e968277587fe98025b3a8b427"
+  integrity sha512-RIfCxkqIfwVEzVx9+pmKygyHV2Qh13KKuL3G1nyjShrAY+nMGjia2v1A5nvDh1FSSalgnxZzrAteMeXGl9FWgA==
   dependencies:
     typescript-monads "^7.2.0"
+    uuid "^8.3.2"
 
 "@eslint/eslintrc@^1.0.4":
   version "1.0.4"
@@ -5310,7 +5311,7 @@ utils-merge@1.0.1, utils-merge@1.x.x:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@8.3.2:
+uuid@8.3.2, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==

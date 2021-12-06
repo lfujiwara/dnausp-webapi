@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { PortsModule } from '../ports/ports.module';
 import {
   AddFaturamentoMutation,
+  EmpresaDbPort,
   RemoveFaturamentoMutation,
   UpsertEmpresaMutation,
 } from '@dnausp/core';
@@ -9,9 +10,21 @@ import {
 @Module({
   imports: [PortsModule],
   providers: [
-    UpsertEmpresaMutation,
-    AddFaturamentoMutation,
-    RemoveFaturamentoMutation,
+    {
+      provide: UpsertEmpresaMutation,
+      useFactory: (port) => new UpsertEmpresaMutation(port),
+      inject: [EmpresaDbPort],
+    },
+    {
+      provide: AddFaturamentoMutation,
+      useFactory: (port) => new AddFaturamentoMutation(port),
+      inject: [EmpresaDbPort],
+    },
+    {
+      provide: RemoveFaturamentoMutation,
+      useFactory: (port) => new RemoveFaturamentoMutation(port),
+      inject: [EmpresaDbPort],
+    },
   ],
   exports: [
     UpsertEmpresaMutation,

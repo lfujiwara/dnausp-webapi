@@ -372,10 +372,10 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
-"@dnausp/core@^0.0.1-alpha.6":
-  version "0.0.1-alpha.6"
-  resolved "https://registry.yarnpkg.com/@dnausp/core/-/core-0.0.1-alpha.6.tgz#5729a45fdfdcf63e968277587fe98025b3a8b427"
-  integrity sha512-RIfCxkqIfwVEzVx9+pmKygyHV2Qh13KKuL3G1nyjShrAY+nMGjia2v1A5nvDh1FSSalgnxZzrAteMeXGl9FWgA==
+"@dnausp/core@0.0.1-alpha.10":
+  version "0.0.1-alpha.10"
+  resolved "https://registry.yarnpkg.com/@dnausp/core/-/core-0.0.1-alpha.10.tgz#0da8f6356d77a4a868c92e62223d22f47da71cd4"
+  integrity sha512-hJSfAiVDY06qFS/GVAVa3aQC+qiqOdshwZb2ae3WGCwpYkodSTP5rSQqddrspEKaBYI7rDsLpIU/5hqfmQIRKg==
   dependencies:
     typescript-monads "^7.2.0"
     uuid "^8.3.2"

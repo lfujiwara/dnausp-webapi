@@ -19,17 +19,60 @@ model Empresa {
   nomeFantasia          String?
   anoFundacao           Int
   atividadePrincipal    String?
-  atividadesSecundarias String[]
+  atividadeSecundaria  String[]
   situacao              String?
-  faturamentos          Faturamento[]
+  historicoFaturamentos Faturamento[]
+  historicoInvestimentos  Investimento[]
+  historicoQuadroDeColaboradores  QuadroDeColaboradores[]
+  incubacoes            Incubacao[]
+  socios                Socio[]
   dadosBrasilAPI        Json?
 }
 
 model Faturamento {
   empresaId String   @db.Uuid
-  empresa   Empresa  @relation(fields: [empresaId], references: [id])
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   anoFiscal Int
   valor     BigInt
 
   @@id([empresaId, anoFiscal])
 }
+
+model QuadroDeColaboradores {
+  empresaId String   @db.Uuid
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  anoFiscal Int
+  valor     BigInt
+
+  @@id([empresaId, anoFiscal])
+}
+
+model Investimento {
+  id                    String   @id @default(uuid()) @db.Uuid
+  empresaId String   @db.Uuid
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  origem    String
+  anoFiscal Int
+  valor     BigInt
+}
+
+model Incubacao {
+  id                    String   @id @default(uuid()) @db.Uuid
+  empresaId String   @db.Uuid
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  incubadora String
+  estado     String
+}
+
+model Socio {
+  id                    String   @id @default(uuid()) @db.Uuid
+  empresaId String   @db.Uuid
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  nome      String
+  email     String?
+  telefone  String?
+  tipoVinculo String?
+  NUSP       String?
+  instituto  String?
+}
+

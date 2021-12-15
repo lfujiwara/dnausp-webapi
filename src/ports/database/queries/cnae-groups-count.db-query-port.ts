@@ -5,10 +5,11 @@ import {
   CnaeGroupsCountQueryInput,
   CnaeGroupsCountQueryOutput,
 } from '@dnausp/core';
+import { prismaClient } from './prisma';
 
 @Injectable()
 export class CnaeGroupsCountDbQueryPort extends CnaeGroupsCountQuery {
-  constructor(@Optional() readonly client: PrismaClient = new PrismaClient()) {
+  constructor(@Optional() readonly client: PrismaClient = prismaClient) {
     super();
   }
 

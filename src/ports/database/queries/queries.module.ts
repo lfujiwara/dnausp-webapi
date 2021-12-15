@@ -7,6 +7,7 @@ import { CnaeGroupsCountDbQueryPort } from './cnae-groups-count.db-query-port';
 import { CnaeGroupsCountYearlyRangeDbQueryPort } from './cnae-groups-count-yearly-range.db-query-port';
 
 @Module({
+  imports: [],
   providers: [
     {
       provide: CnaeGroupsCountQuery,

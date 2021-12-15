@@ -6,10 +6,11 @@ import {
 } from '@dnausp/core';
 import { Injectable, Optional } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
+import { prismaClient } from './prisma';
 
 @Injectable()
 export class CnaeGroupsCountYearlyRangeDbQueryPort extends CnaeGroupsCountYearlyRangeQuery {
-  constructor(@Optional() readonly client: PrismaClient = new PrismaClient()) {
+  constructor(@Optional() readonly client: PrismaClient = prismaClient) {
     super();
   }
 

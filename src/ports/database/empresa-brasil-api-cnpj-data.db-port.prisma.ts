@@ -3,10 +3,11 @@ import { PrismaClient } from '@prisma/client';
 
 import { Result } from 'typescript-monads';
 import { CNPJ } from '@dnausp/core';
+import { prismaClient } from './queries/prisma';
 
 @Injectable()
 export class EmpresaBrasilApiCnpjDataDbPortPrisma {
-  constructor(@Optional() readonly client: PrismaClient = new PrismaClient()) {}
+  constructor(@Optional() readonly client: PrismaClient = prismaClient) {}
 
   async getCnpjsToProcess(skip: number, take: number) {
     return this.client.empresa

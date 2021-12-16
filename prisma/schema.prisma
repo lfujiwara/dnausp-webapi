@@ -74,5 +74,11 @@ model Socio {
   tipoVinculo String?
   NUSP       String?
   instituto  String?
+  isMale     Boolean?
 }
 
+model GenderInferrer {
+  id Int @id @default(autoincrement())
+  name String @unique
+  isMale Boolean?
+}

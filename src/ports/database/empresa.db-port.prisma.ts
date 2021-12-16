@@ -9,6 +9,7 @@ import { InvestimentosJsonSerializer } from '../serializers/json/investimentos.j
 import { HistoricoQuadroDeColaboradoresJsonSerializer } from '../serializers/json/historico-quadro-de-colaboradores.json-serializer';
 import { IncubacaoJsonSerializer } from '../serializers/json/incubacao.json-serializer';
 import { SocioJsonSerializer } from '../serializers/json/socio.json-serializer';
+import { GenderInferrerService } from '../gender-inferrer/gender-inferrer.service';
 
 const include = {
   historicoFaturamentos: true,
@@ -20,7 +21,10 @@ const include = {
 
 @Injectable()
 export class EmpresaDbPortPrisma extends EmpresaDbPort {
-  constructor(@Optional() readonly client: PrismaClient = prismaClient) {
+  constructor(
+    private readonly genderInferrer: GenderInferrerService,
+    @Optional() readonly client: PrismaClient = prismaClient,
+  ) {
     super();
   }
 
@@ -97,7 +101,22 @@ export class EmpresaDbPortPrisma extends EmpresaDbPort {
       },
       socios: {
         createMany: {
-          data: empresa.socios.map(SocioJsonSerializer.serialize),
+          data: await Promise.all(
+            empresa.socios.map(SocioJsonSerializer.serialize).map(async (s) => {
+              const inferredGender = await this.genderInferrer
+                .get(s.nome)
+                .catch(() => null);
+              let isMale: boolean | null;
+
+              if (inferredGender !== null) isMale = inferredGender === 'M';
+              else isMale = null;
+
+              return {
+                ...s,
+                isMale,
+              };
+            }),
+          ),
         },
       },
     });

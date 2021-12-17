@@ -1,23 +1,9 @@
 import { Module } from '@nestjs/common';
-import {
-  CnaeGroupsCountQuery,
-  CnaeGroupsCountYearlyRangeQuery,
-} from '@dnausp/core';
-import { CnaeGroupsCountDbQueryPort } from './cnae-groups-count.db-query-port';
-import { CnaeGroupsCountYearlyRangeDbQueryPort } from './cnae-groups-count-yearly-range.db-query-port';
+import { queriesImpl } from './impl';
 
 @Module({
   imports: [],
-  providers: [
-    {
-      provide: CnaeGroupsCountQuery,
-      useClass: CnaeGroupsCountDbQueryPort,
-    },
-    {
-      provide: CnaeGroupsCountYearlyRangeQuery,
-      useClass: CnaeGroupsCountYearlyRangeDbQueryPort,
-    },
-  ],
-  exports: [CnaeGroupsCountQuery, CnaeGroupsCountYearlyRangeQuery],
+  providers: [...queriesImpl.providers],
+  exports: [...queriesImpl.exported],
 })
 export class QueriesModule {}

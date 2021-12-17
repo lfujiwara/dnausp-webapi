@@ -1,8 +1,14 @@
-import { EmpresasAnoFundacaoGroupbyQuery } from '../ports/database/queries/empresas-ano-fundacao-groupby.db-query-port';
+import { FaturamentoDbQueryPort } from '../ports/database/queries/impl/faturamento.db-query-port';
+import { FilterEmpresa, Instituto } from '@dnausp/core';
 
 const main = async () => {
-  const port = new EmpresasAnoFundacaoGroupbyQuery();
-  await port.execute().then(console.log);
+  const args: FilterEmpresa = {
+    instituto: [Instituto.IME],
+  };
+  const port = new FaturamentoDbQueryPort();
+  port.execute(args).then((result) => {
+    console.log(JSON.stringify(result, null, 2));
+  });
 };
 
 main();

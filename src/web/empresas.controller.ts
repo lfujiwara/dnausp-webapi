@@ -3,19 +3,14 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
   ParseIntPipe,
   Post,
   Put,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
   AddFaturamentoMutation,
-  CnaeGroupsCountQuery,
-  CnaeGroupsCountQueryInput,
-  CnaeGroupsCountYearlyRangeQuery,
   RemoveFaturamentoMutation,
   UpsertEmpresaMutation,
   UpsertEmpresaMutationInput,
@@ -45,19 +40,7 @@ export class EmpresasController {
     private readonly upsertEmpresa: UpsertEmpresaMutation,
     private readonly addFaturamentoMutation: AddFaturamentoMutation,
     private readonly removeFaturamentoMutation: RemoveFaturamentoMutation,
-    private readonly cnaeGroupsCountQuery: CnaeGroupsCountQuery,
-    private readonly cnaeGroupsCountQueryYearlyRange: CnaeGroupsCountYearlyRangeQuery,
   ) {}
-
-  private static extractCnaeStatsQueryParams(_anoMin: string, _anoMax: string) {
-    const anoMin: number | undefined = parseInt(_anoMin, 10);
-    const anoMax: number | undefined = parseInt(_anoMax, 10);
-
-    const filter: CnaeGroupsCountQueryInput = {};
-    if (!isNaN(anoMin)) filter.anoMin = anoMin;
-    if (!isNaN(anoMax)) filter.anoMax = anoMax;
-    return filter;
-  }
 
   @Put()
   @UseGuards(JwtGuard)
@@ -101,33 +84,5 @@ export class EmpresasController {
     if (result.isOk()) return EmpresaJsonSerializer.serialize(result.unwrap());
 
     throw new BadRequestException(result.unwrapFail());
-  }
-
-  @Get('cnae/stats')
-  @UseGuards(JwtGuard)
-  async getCnaeStats(
-    @Query('anoMin') _anoMin: string,
-    @Query('anoMax') _anoMax: string,
-  ) {
-    const filter = EmpresasController.extractCnaeStatsQueryParams(
-      _anoMin,
-      _anoMax,
-    );
-
-    return this.cnaeGroupsCountQuery.execute(filter);
-  }
-
-  @Get('cnae/stats/yearly')
-  @UseGuards(JwtGuard)
-  async getCnaeStatsYearly(
-    @Query('anoMin') _anoMin: string,
-    @Query('anoMax') _anoMax: string,
-  ) {
-    const filter = EmpresasController.extractCnaeStatsQueryParams(
-      _anoMin,
-      _anoMax,
-    );
-
-    return this.cnaeGroupsCountQueryYearlyRange.execute(filter);
   }
 }

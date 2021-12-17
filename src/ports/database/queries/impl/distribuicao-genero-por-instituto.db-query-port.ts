@@ -27,6 +27,22 @@ export class DistribuicaoGeneroPorInstitutoDbQueryPort extends DistribuicaoGener
                join "Empresa" E on s."empresaId" = E.id
       where "isMale" is not null
       group by instituto;
-    `;
+    `.then(
+      (
+        res: {
+          instituto: string;
+          distribuicao: {
+            [key: string]: number;
+          };
+        }[],
+      ) =>
+        res.reduce(
+          (acc, curr) => ({
+            ...acc,
+            [curr.instituto]: curr.distribuicao,
+          }),
+          {},
+        ),
+    );
   }
 }

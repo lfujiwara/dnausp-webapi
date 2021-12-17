@@ -21,7 +21,7 @@ export class FaturamentoDbQueryPort extends FaturamentoQuery {
   execute(filter: FilterEmpresa): Promise<FaturamentoQueryOutput> {
     const clause = FilterEmpresaClauseGenerator.generate(filter);
     const select = Prisma.sql`
-      select f."anoFiscal", round(avg(f.valor)) "valor"
+      select f."anoFiscal" ano, round(avg(f.valor)) "valor"
       from "Faturamento" f
                left join "Empresa" E on E.id = f."empresaId"
                left join "Socio" S on E.id = S."empresaId"

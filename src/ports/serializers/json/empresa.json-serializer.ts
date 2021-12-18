@@ -22,13 +22,13 @@ export class EmpresaJsonSerializer {
       id: empresa.id,
       idEstrangeira: empresa.idEstrangeira,
       estrangeira: empresa.estrangeira,
-      cnpj: CNPJJsonSerializer.deserialize(empresa.cnpj),
+      cnpj: empresa.cnpj && CNPJJsonSerializer.deserialize(empresa.cnpj),
       razaoSocial: empresa.razaoSocial,
       nomeFantasia: empresa.nomeFantasia,
       anoFundacao: empresa.anoFundacao,
-      atividadePrincipal: CNAEJsonSerializer.deserialize(
-        empresa.atividadePrincipal,
-      ),
+      atividadePrincipal:
+        empresa.atividadePrincipal &&
+        CNAEJsonSerializer.deserialize(empresa.atividadePrincipal),
       atividadeSecundaria: empresa.atividadeSecundaria.map(
         CNAEJsonSerializer.deserialize,
       ),
@@ -55,13 +55,13 @@ export class EmpresaJsonSerializer {
       id: empresa.id,
       idEstrangeira: empresa.idEstrangeira || null,
       estrangeira: empresa.estrangeira,
-      cnpj: CNPJJsonSerializer.serialize(empresa.cnpj),
+      cnpj: empresa.cnpj && CNPJJsonSerializer.serialize(empresa.cnpj),
       razaoSocial: empresa.razaoSocial,
       nomeFantasia: empresa.nomeFantasia,
       anoFundacao: empresa.anoFundacao,
-      atividadePrincipal: CNAEJsonSerializer.serialize(
-        empresa.atividadePrincipal,
-      ),
+      atividadePrincipal:
+        empresa.atividadePrincipal &&
+        CNAEJsonSerializer.serialize(empresa.atividadePrincipal),
       atividadeSecundaria: empresa.atividadeSecundaria.map(
         CNAEJsonSerializer.serialize,
       ),

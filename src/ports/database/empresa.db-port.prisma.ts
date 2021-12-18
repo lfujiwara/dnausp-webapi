@@ -19,6 +19,22 @@ const include = {
   socios: true,
 };
 
+const CatchLogIgnoreDecorator = (
+  target: any,
+  propertyKey: string,
+  descriptor: PropertyDescriptor,
+) => {
+  const originalMethod = descriptor.value;
+  descriptor.value = function (...args: any[]) {
+    try {
+      return originalMethod.apply(this, args);
+    } catch (e) {
+      console.error(e);
+      return Result.fail(e + '');
+    }
+  };
+};
+
 @Injectable()
 export class EmpresaDbPortPrisma extends EmpresaDbPort {
   constructor(
@@ -28,6 +44,7 @@ export class EmpresaDbPortPrisma extends EmpresaDbPort {
     super();
   }
 
+  @CatchLogIgnoreDecorator
   findOneByIdentifiers(
     cnpj?: CNPJ,
     idEstrangeira?: number,
@@ -46,6 +63,7 @@ export class EmpresaDbPortPrisma extends EmpresaDbPort {
       });
   }
 
+  @CatchLogIgnoreDecorator
   getEmpresa(id: string): Promise<Result<Empresa, string>> {
     return this.client.empresa
       .findUnique({
@@ -60,6 +78,7 @@ export class EmpresaDbPortPrisma extends EmpresaDbPort {
       });
   }
 
+  @CatchLogIgnoreDecorator
   async remove(id: string): Promise<Result<void, string>> {
     const res = await this.client.empresa.delete({
       where: { id },
@@ -69,6 +88,7 @@ export class EmpresaDbPortPrisma extends EmpresaDbPort {
     return Result.ok(undefined);
   }
 
+  @CatchLogIgnoreDecorator
   async save(empresa): Promise<Result<Empresa, string>> {
     const prismaEmpresa = EmpresaJsonSerializer.serialize(empresa);
 

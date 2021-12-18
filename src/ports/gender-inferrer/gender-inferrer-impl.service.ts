@@ -43,6 +43,7 @@ export class IBGEClient {
   }
 
   query(key: string): Promise<InferredGenderResponse> {
+    console.log('Querying IBGE for', key);
     return Promise.race([
       new Promise<InferredGenderResponse>((resolve) => {
         this.queue.enqueue(async () =>
@@ -66,6 +67,7 @@ export class IBGEClient {
         params: {
           sexo: gender,
         },
+        timeout: 30000,
       }),
     ).then(({ data }) => {
       if (data.length === 0 || data[0].res.length === 0) return undefined;
@@ -88,6 +90,7 @@ export class GenderInferrerImplService extends GenderInferrerService {
 
   protected static normalize(name: string) {
     return name
+      .trim()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase()

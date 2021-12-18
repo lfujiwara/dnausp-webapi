@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import {
   DistribuicaoCnaePorAnoFundacaoQuery,
   DistribuicaoCnaePorInstitutoQuery,
@@ -10,8 +10,10 @@ import {
   FaturamentoQuery,
 } from '@dnausp/core';
 import { FilterEmpresaPipe } from './pipes/filter-empresa.pipe';
+import { JwtGuard } from '../auth/guards/jwt.guard';
 
 @Controller('empresas/query')
+@UseGuards(JwtGuard)
 export class EmpresasQueryController {
   constructor(
     private distribuicaoCnae: DistribuicaoCnaeQuery,

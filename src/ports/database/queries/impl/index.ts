@@ -6,6 +6,7 @@ import { DistribuicaoGeneroPorAnoFundacaoDbQueryPort } from './distribuicao-gene
 import { DistribuicaoGeneroPorInstitutoDbQueryPort } from './distribuicao-genero-por-instituto.db-query-port';
 import { FaturamentoDbQueryPort } from './faturamento.db-query-port';
 import { DistribuicaoInstitutoPorCnaeDbQueryPort } from './distribuicao-instituto-por-cnae.db-query-port';
+import { QtdEmpresasDbQueryPort } from './qtd-empresas.db-query-port';
 
 const ports = [
   DistribuicaoCnaeDbQueryPort,
@@ -17,6 +18,7 @@ const ports = [
   DistribuicaoCnaePorInstitutoDbQueryPort,
   DistribuicaoInstitutoPorCnaeDbQueryPort,
   FaturamentoDbQueryPort,
+  QtdEmpresasDbQueryPort,
 ];
 
 const providers = ports.map((p) => p.provider);

@@ -3,8 +3,9 @@ import {
   DistribuicaoCnaePorInstitutoQueryOutput,
 } from '@dnausp/core';
 import { Optional } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { prismaClient } from '../prisma';
+import { QueryResult } from '../util/query-result';
 
 export class DistribuicaoCnaePorInstitutoDbQueryPort extends DistribuicaoCnaePorInstitutoQuery {
   static provider = {
@@ -16,8 +17,8 @@ export class DistribuicaoCnaePorInstitutoDbQueryPort extends DistribuicaoCnaePor
     super();
   }
 
-  execute(): Promise<DistribuicaoCnaePorInstitutoQueryOutput> {
-    return this.client.$queryRaw`
+  async execute(): Promise<DistribuicaoCnaePorInstitutoQueryOutput> {
+    const queryRes = (await this.client.$queryRaw`
     select "instituto", jsonb_object_agg("cnae", cnt) distribuicao
     from (select "instituto", "atividadePrincipal" cnae, count(*) cnt
           from "Empresa" E
@@ -27,15 +28,21 @@ export class DistribuicaoCnaePorInstitutoDbQueryPort extends DistribuicaoCnaePor
     group by "instituto";
     `.then(
       (
-        result: {
+        res: {
           instituto: string;
           distribuicao: { [cnae: string]: number };
         }[],
       ) =>
-        result.reduce(
+        res.reduce(
           (acc, curr) => ({ ...acc, [curr.instituto]: curr.distribuicao }),
           {},
         ),
-    );
+    )) as any;
+
+    return (await QueryResult.build(
+      this.client,
+      queryRes,
+      Prisma.sql`select count(*) count from "Empresa" E`,
+    )) as any;
   }
 }

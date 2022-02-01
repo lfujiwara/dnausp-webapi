@@ -3,8 +3,9 @@ import {
   DistribuicaoGeneroPorInstitutoQueryOutput,
 } from '@dnausp/core';
 import { Optional } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { prismaClient } from '../prisma';
+import { QueryResult } from '../util/query-result';
 
 export class DistribuicaoGeneroPorInstitutoDbQueryPort extends DistribuicaoGeneroPorInstitutoQuery {
   static provider = {
@@ -16,8 +17,8 @@ export class DistribuicaoGeneroPorInstitutoDbQueryPort extends DistribuicaoGener
     super();
   }
 
-  execute(): Promise<DistribuicaoGeneroPorInstitutoQueryOutput> {
-    return this.client.$queryRaw`
+  async execute(): Promise<DistribuicaoGeneroPorInstitutoQueryOutput> {
+    const result = await this.client.$queryRaw`
       select s.instituto,
              json_build_array(
                      jsonb_build_object('genero', 'M', 'qtd', SUM(case "isMale" when true then 1 else 0 end)),
@@ -44,5 +45,15 @@ export class DistribuicaoGeneroPorInstitutoDbQueryPort extends DistribuicaoGener
           {},
         ),
     );
+
+    return (await QueryResult.build(
+      this.client,
+      result,
+      Prisma.sql`
+    select count(*) count
+      from "Socio" s
+               join "Empresa" E on s."empresaId" = E.id
+      where "isMale" is not null`,
+    )) as any;
   }
 }
